@@ -16,51 +16,113 @@
 # Variables to track app menu location
 mainAppLoop = 0
 
+# Variables to track user detail verification status
+firstNameVerified = 0
+lastNameVerified = 0
+phoneNumberVerified = 0
+emailAddressVerified = 0
+homeAddressVerified = 0
+
 # Declaring user detail variables
 firstName = ""
+lastName = ""
 phoneNumber = ""
 emailAddress = ""
 homeAddress = ""
 
 # User prompts
-namePrompt = "What is your name?"
+firstNamePrompt = "What is your first name?"
+lastNamePrompt = "What is your last name?"
 phoneNumberPrompt = "What is your phone number?"
 emailAddressPrompt = "What is your email address?"
 homeAddressPrompt = "What is your home address?"
 
-# User incorrect entry prompts
-reenterName = "First name field is empty. Please re-enter your first name"
-
+# User error prompts
+firstNameErrorPrompt = "First name not acceptable. Please re-enter your first name."
+lastNameErrorPrompt = "Last name not acceptable. Please re-enter your last name."
+phoneNumberErrorPrompt = "Phone number not acceptable. Please re-enter you phone number."
 
 # User feedback prompts
-feedbackName = "Username accepted"
+feedbackFirstName = "First name accepted."
+feedbackLastName = "Last name accepted."
+feedbackPhoneNumber = "Phone number accepted."
+feedbackEmailAddress = "Email address accepted."
+feedbackHomeAddress = "Home address accepted."
 
 # App formatting
 chevronIndicator = ">"
 newLine = "\n"
+tab = "\t"
 
-# Function to verify the name is acceptable
-def nameVerification():
-    if not name:
-        print(f"{reenterName}")
-    else:
-        global mainAppLoop 
-        mainAppLoop = 1
-        print(f"{feedbackName}")
+# Function to verify the first name is acceptable
+def firstNameVerification():
+    global firstName
+    global firstNameVerified
 
-# Function to verify the phone number is acceptable
+    firstNameVerified = 0
+
+    firstName = input(f"{firstNamePrompt}{newLine}{chevronIndicator} ")
+    
+    while (firstNameVerified == 0):
+        if (not firstName):
+            firstName = input(f"{tab}{firstNameErrorPrompt}{newLine}{chevronIndicator} ")
+        else:
+            firstNameVerified = 1
+            print(f"{tab}{feedbackFirstName}{newLine}")
+
+# Function to verify the last name is acceptable
+def lastNameVerification():
+    global lastName
+    global lastNameVerified
+
+    lastNameVerified = 0
+
+    lastName = input(f"{lastNamePrompt}{newLine}{chevronIndicator} ")
+
+    while (lastNameVerified == 0):
+        if (not lastName):
+            lastName = input(f"{tab}{lastNameErrorPrompt}{newLine}{chevronIndicator} ")
+        else:
+            lastNameVerified = 1
+            print(f"{tab}{feedbackLastName}{newLine}")
+
 def phoneNumberVerification():
-    if not phoneNumber:
+    global phoneNumber
+    global phoneNumberVerified
 
-"""
-phoneNumber = input(f"{phoneNumberPrompt}{newLine}{chevronIndicator}")
-emailAddress = input(f"{emailAddressPrompt}{newLine}{chevronIndicator}")
-homeAddress = input(f"{homeAddressPrompt}{newLine}{chevronIndicator}")
-"""
+    phoneNumberVerified = 0
 
+    phoneNumber = input(f"{phoneNumberPrompt}{newLine}{chevronIndicator} ")
+
+    while (phoneNumberVerified == 0):
+
+        phoneNumberStringList = list(phoneNumber)
+
+        if (len(phoneNumberStringList) != 10 or phoneNumber.isnumeric() == False):
+            phoneNumber = input(f"{tab}{phoneNumberErrorPrompt}{newLine}{chevronIndicator} ")
+        else:
+            phoneNumberVerified = 1
+            print(f"{tab}{feedbackPhoneNumber}{newLine}")
+
+
+# Main app loop
 while(mainAppLoop == 0):
-    name = input(f"{namePrompt}{newLine}{chevronIndicator}")
 
-    nameVerification()
+    firstNameVerification()
 
-print(name) #, phoneNumber, emailAddress, homeAddress)
+    lastNameVerification()
+
+    phoneNumberVerification()
+
+
+
+
+#phoneNumber = input(f"{phoneNumberPrompt}{newLine}{chevronIndicator}")
+#emailAddress = input(f"{emailAddressPrompt}{newLine}{chevronIndicator}")
+#homeAddress = input(f"{homeAddressPrompt}{newLine}{chevronIndicator}")
+#print(firstName) #, phoneNumber, emailAddress, homeAddress)
+# Function to verify the phone number is acceptable
+#def phoneNumberVerification():
+ #   if not phoneNumber:
+  #      print(f"{reenterPhoneNumber}")
+    
