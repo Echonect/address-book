@@ -41,6 +41,7 @@ homeAddressPrompt = "What is your home address?"
 firstNameErrorPrompt = "First name not acceptable. Please re-enter your first name."
 lastNameErrorPrompt = "Last name not acceptable. Please re-enter your last name."
 phoneNumberErrorPrompt = "Phone number not acceptable. Please re-enter you phone number."
+emailAddressAtSymbolErrorPrompt = "@ symbol not found in email address. Please re-enter your email address"
 
 # User feedback prompts
 feedbackFirstName = "First name accepted."
@@ -86,6 +87,7 @@ def lastNameVerification():
             lastNameVerified = 1
             print(f"{tab}{feedbackLastName}{newLine}")
 
+# Function to verify the phone number is acceptable
 def phoneNumberVerification():
     global phoneNumber
     global phoneNumberVerified
@@ -104,6 +106,27 @@ def phoneNumberVerification():
             phoneNumberVerified = 1
             print(f"{tab}{feedbackPhoneNumber}{newLine}")
 
+# Function to verify the email address is acceptable
+def emailAddressVerification():
+    global emailAddress
+    global emailAddressVerified
+
+    emailAddressVerified = 0
+
+    emailAddress = input(f"{emailAddressPrompt}{newLine}{chevronIndicator} ")
+
+    while (emailAddressVerified == 0):
+
+        emailAddressSplit = emailAddress.split('@')
+
+        if (emailAddress.find() == -1):
+            print("")
+
+        #for emailAddressCharacter in emailAddressStringList:
+        #    if (emailAddressCharacter == "@"):
+        #        print("@ found")
+
+
 
 # Main app loop
 while(mainAppLoop == 0):
@@ -114,15 +137,5 @@ while(mainAppLoop == 0):
 
     phoneNumberVerification()
 
-
-
-
-#phoneNumber = input(f"{phoneNumberPrompt}{newLine}{chevronIndicator}")
-#emailAddress = input(f"{emailAddressPrompt}{newLine}{chevronIndicator}")
-#homeAddress = input(f"{homeAddressPrompt}{newLine}{chevronIndicator}")
-#print(firstName) #, phoneNumber, emailAddress, homeAddress)
-# Function to verify the phone number is acceptable
-#def phoneNumberVerification():
- #   if not phoneNumber:
-  #      print(f"{reenterPhoneNumber}")
+    emailAddressVerification()
     
