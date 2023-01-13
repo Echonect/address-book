@@ -41,7 +41,10 @@ homeAddressPrompt = "What is your home address?"
 firstNameErrorPrompt = "First name not acceptable. Please re-enter your first name."
 lastNameErrorPrompt = "Last name not acceptable. Please re-enter your last name."
 phoneNumberErrorPrompt = "Phone number not acceptable. Please re-enter you phone number."
-emailAddressAtSymbolErrorPrompt = "@ symbol not found in email address. Please re-enter your email address"
+emailAddressUsernameErrorPrompt = "Email address username not acceptable. Please re-enter your email address."
+emailAddressDomainErrorPrompt = "Email address domain not acceptable. Please re-enter your email address."
+emailAddressAtSymbolErrorPrompt = "@ symbol not found in email address. Please re-enter your email address."
+emailAddressPeriodErrorPrompt = "Period (.) not found in email address. Please re-enter your email address."
 
 # User feedback prompts
 feedbackFirstName = "First name accepted."
@@ -54,6 +57,8 @@ feedbackHomeAddress = "Home address accepted."
 chevronIndicator = ">"
 newLine = "\n"
 tab = "\t"
+
+acceptableDomainTypes = [".com", ".org", ".gov", ".edu", ".net", ".au", ".nz", ".za", ".us"]
 
 # Function to verify the first name is acceptable
 def firstNameVerification():
@@ -110,23 +115,39 @@ def phoneNumberVerification():
 def emailAddressVerification():
     global emailAddress
     global emailAddressVerified
+    global acceptableDomainTypes
 
     emailAddressVerified = 0
 
     emailAddress = input(f"{emailAddressPrompt}{newLine}{chevronIndicator} ")
 
     while (emailAddressVerified == 0):
+        
+        # Check for an @ symbol
+        if ("@" in emailAddress):
 
-        emailAddressSplit = emailAddress.split('@')
+            emailAddressSplit = emailAddress.split('@')
 
-        if (emailAddress.find() == -1):
-            print("")
+            # Ensure email username is at least 1 character long
+            if (len(emailAddressSplit[0]) > 0):
 
-        #for emailAddressCharacter in emailAddressStringList:
-        #    if (emailAddressCharacter == "@"):
-        #        print("@ found")
+                # Check for a period in the domain
+                if ("." in emailAddress):
 
+                    emailAddressPeriodSplit = emailAddress[1].split(".")
 
+                    for domainType in acceptableDomainTypes:
+                        if (emailAddressPeriodSplit[1] == domainType):
+                            emailAddressVerified = 1
+                            print(f"{emailAddressPeriodSplit}\n{domainType}")
+                    else:
+                        emailAddress = input(f"{tab}domain type not found{newLine}{chevronIndicator}")
+                else:
+                    emailAddress = input(f"{tab}Period was not found{newLine}{chevronIndicator}")
+            else:
+                emailAddress = input(f"{tab}{emailAddressUsernameErrorPrompt}{newLine}{chevronIndicator}")
+        else:
+            emailAddress = input(f"{tab}{emailAddressAtSymbolErrorPrompt}{newLine}{chevronIndicator}")
 
 # Main app loop
 while(mainAppLoop == 0):
