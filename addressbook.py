@@ -21,27 +21,57 @@ firstNameVerified = 0
 lastNameVerified = 0
 phoneNumberVerified = 0
 emailAddressVerified = 0
-homeAddressVerified = 0
+streetNumberVerified = 0
+streetNameVerified = 0
+streetPrefixVerified = 0
+suburbVerified = 0
+cityVerified = 0
+stateVerified = 0
+postcodeVerified = 0
+countryVerified = 0
 
 # Declaring user detail variables
 firstName = ""
 lastName = ""
 phoneNumber = ""
 emailAddress = ""
-homeAddress = ""
+streetNumber = ""
+streetName = ""
+streetPrefix = ""
+suburb = ""
+city = ""
+state = ""
+postcode = ""
+country = ""
 
 # User prompts
 firstNamePrompt = "What is your first name?"
 lastNamePrompt = "What is your last name?"
 phoneNumberPrompt = "What is your phone number?"
 emailAddressPrompt = "What is your email address?"
-homeAddressPrompt = "What is your home address?"
+streetNumberPrompt = "What is your street number?"
+streetNamePrompt = "What is your street name?"
+streetPrefixPrompt = "What is your street suffix?"
+suburbVerified = "What is your suburb?"
+cityPrompt = "What is your city?"
+statePrompt = "What is your state?"
+postcodePrompt = "What is your postcode?"
+countryPrompt = "What is your country?"
+
 
 # User error prompts
 firstNameErrorPrompt = "First name not acceptable. Please re-enter your first name."
 lastNameErrorPrompt = "Last name not acceptable. Please re-enter your last name."
 phoneNumberErrorPrompt = "Phone number not acceptable. Please re-enter you phone number."
 emailAddressErrorPrompt = "Email address not acceptable. Please re-enter your email address."
+streetNumberErrorPrompt = "Street number not acceptable. Please re-enter your street number."
+streetNameErrorPrompt = "Street name not acceptable. Please re-enter your street name."
+streetPrefixErrorPrompt = "Street suffix not acceptable. Please re-enter your street suffix."
+suburbErrorPrompt = "Suburb not acceptable. Please re-enter your suburb."
+cityErrorPrompt = "City not acceptable. Please re-enter your city."
+stateErrorPrompt = "State not acceptable. Please re-enter your state."
+postcodeErrorPrompt = "Postcode not acceptable. Please re-enter your postcode."
+countryErrorPrompt = "Country not acceptable. Please re-enter your country."
 
 
 # User feedback prompts
@@ -49,7 +79,14 @@ feedbackFirstName = "First name accepted."
 feedbackLastName = "Last name accepted."
 feedbackPhoneNumber = "Phone number accepted."
 feedbackEmailAddress = "Email address accepted."
-feedbackHomeAddress = "Home address accepted."
+feedbackStreetNumber = "Street number accepted." 
+feedbackStreetName = "Street name accepted."
+feedbackStreetPrefix = "Street prefix accepted."
+feedbackSuburb = "Suburb accepted."
+feedbackCity = "City accepted."
+feedbackState = "State accepted."
+feedbackPostcode = "Postcode accepted."
+feedbackCountry = "Country accepted."
 
 # App formatting
 chevronIndicator = ">"
@@ -57,6 +94,7 @@ newLine = "\n"
 tab = "\t"
 
 acceptableDomainTypes = ["com", "org", "gov", "edu", "net", "au", "nz", "za", "us"]
+acceptableStreetPrefix = ["st", "dr", "tce", "rd"]
 
 # Function to verify the first name is acceptable
 def firstNameVerification():
@@ -143,14 +181,67 @@ def emailAddressVerification():
         if (emailAddressVerified == 0):
             emailAddress = input(f"{tab}{emailAddressErrorPrompt}{newLine}{chevronIndicator} ")
 
+def streetNumberVerification():
+    global streetNumber
+    global streetNumberVerified
+
+    streetNumberVerified = 0
+
+    streetNumber = input(f"{streetNumberPrompt}{newLine}{chevronIndicator} ")
+
+    while (streetNumberVerified == 0):
+        if (streetNumber.isnumeric() == True):
+            streetNumberVerified = 1
+            print(f"{tab}{feedbackStreetNumber}{newLine}")
+        else:
+            streetNumber = input(f"{tab}{streetNumberErrorPrompt}{newLine}{chevronIndicator} ")
+
+def streetNameVerification():
+    global streetName
+    global streetNameVerified
+
+    streetNameVerified = 0
+
+    streetName = input(f"{streetNamePrompt}{newLine}{chevronIndicator} ")
+
+    while (streetNameVerified == 0):
+        if (not streetName):
+            streetName = input(f"{tab}{streetNameErrorPrompt}{newLine}{chevronIndicator} ")
+        else:
+            streetNameVerified = 1
+            print(f"{tab}{feedbackStreetName}{newLine}")
+
+def streetPrefixVerification():
+    global streetPrefix
+    global streetPrefixVerified
+
+    streetPrefixVerified = 0
+
+    streetPrefix = input(f"{streetPrefixPrompt}{newLine}{chevronIndicator}")
+
+    while (streetPrefixVerified == 0):
+        for prefix in acceptableStreetPrefix:
+            if (streetPrefix == prefix):
+                print("Working")
+            else:
+                streetPrefix = input(f"{tab}{streetPrefixErrorPrompt}{newLine}{chevronIndicator}")
+
+
+# - The home address contains a street prefix (st, dr, etc.), suburb or city, state, postcode, and country
 # Main app loop
 while(mainAppLoop == 0):
 
-    firstNameVerification()
+    #firstNameVerification()
 
-    lastNameVerification()
+    #lastNameVerification()
 
-    phoneNumberVerification()
+    #phoneNumberVerification()
 
-    emailAddressVerification()
+    #emailAddressVerification()
+
+    #streetNumberVerification()
+    
+    #streetNameVerification()
+
+    streetPrefixVerification()
     
