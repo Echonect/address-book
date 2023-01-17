@@ -13,8 +13,10 @@
 #
 # 4. These will be printed out in the manner specified
 
-# Variables to track app menu location
-mainAppLoop = 0
+# Menu banner art
+menuBanner = "+--------------------+\n|    ADDRESS BOOK    |\n+--------------------+"
+
+menuSelect = ""
 
 # Variables to track user detail verification status
 firstNameVerified = 0
@@ -52,7 +54,7 @@ emailAddressPrompt = "What is your email address?"
 streetNumberPrompt = "What is your street number?"
 streetNamePrompt = "What is your street name?"
 streetPrefixPrompt = "What is your street suffix?"
-suburbVerified = "What is your suburb?"
+suburbPrompt = "What is your suburb?"
 cityPrompt = "What is your city?"
 statePrompt = "What is your state?"
 postcodePrompt = "What is your postcode?"
@@ -177,6 +179,7 @@ def emailAddressVerification():
                         for domainType in acceptableDomainTypes:
                             if (emailAddressDomainSplit[1] == domainType):
                                 emailAddressVerified = 1
+                                print(f"{tab}{feedbackEmailAddress}{newLine}")
         
         if (emailAddressVerified == 0):
             emailAddress = input(f"{tab}{emailAddressErrorPrompt}{newLine}{chevronIndicator} ")
@@ -217,31 +220,150 @@ def streetPrefixVerification():
 
     streetPrefixVerified = 0
 
-    streetPrefix = input(f"{streetPrefixPrompt}{newLine}{chevronIndicator}")
+    streetPrefix = input(f"{streetPrefixPrompt}{newLine}{chevronIndicator} ")
 
     while (streetPrefixVerified == 0):
-        for prefix in acceptableStreetPrefix:
-            if (streetPrefix == prefix):
-                print("Working")
-            else:
-                streetPrefix = input(f"{tab}{streetPrefixErrorPrompt}{newLine}{chevronIndicator}")
+
+        if (streetPrefix in  acceptableStreetPrefix):
+            streetPrefixVerified = 1
+            print(f"{tab}{feedbackStreetPrefix}{newLine}")    
+        else:
+            streetPrefix = input(f"{tab}{streetPrefixErrorPrompt}{newLine}{chevronIndicator} ")
+
+def suburbVerification():
+    global suburb
+    global suburbVerified
+
+    suburbVerified = 0
+
+    suburb = input(f"{suburbPrompt}{newLine}{chevronIndicator} ")
+
+    while (suburbVerified == 0):
+
+        if (not suburb): 
+            suburb = input(f"{tab}{suburbErrorPrompt}{newLine}{chevronIndicator} ")
+        else:
+            suburbVerified = 1
+            print(f"{tab}{feedbackSuburb}{newLine}")
+
+def cityVerification():
+    global city
+    global cityVerified
+
+    cityVerified = 0
+
+    city = input(f"{cityPrompt}{newLine}{chevronIndicator} ")
+
+    while (cityVerified == 0):
+
+        if (not city): 
+            city = input(f"{tab}{cityErrorPrompt}{newLine}{chevronIndicator} ")
+        else:
+            cityVerified = 1
+            print(f"{tab}{feedbackCity}{newLine}")
+
+def stateVerification():
+    global state
+    global stateVerified
+
+    stateVerified = 0
+
+    state = input(f"{statePrompt}{newLine}{chevronIndicator} ")
+
+    while (stateVerified == 0):
+
+        if (not state): 
+            state = input(f"{tab}{stateErrorPrompt}{newLine}{chevronIndicator} ")
+        else:
+            stateVerified = 1
+            print(f"{tab}{feedbackState}{newLine}")
+
+def postcodeVerification():
+    global postcode
+    global postcodeVerified
+
+    postcodeVerified = 0
+
+    postcode = input(f"{postcodePrompt}{newLine}{chevronIndicator} ")
+
+    while (postcodeVerified == 0):
+
+        if (postcode.isnumeric() == True and len(postcode) == 4):
+            postcodeVerified = 1
+            print(f"{tab}{feedbackPostcode}{newLine}")
+        else:
+            postcode = input(f"{tab}{postcodeErrorPrompt}{newLine}{chevronIndicator} ")
 
 
-# - The home address contains a street prefix (st, dr, etc.), suburb or city, state, postcode, and country
-# Main app loop
-while(mainAppLoop == 0):
+def countryVerification():
+    global country
+    global countryVerified
 
-    #firstNameVerification()
+    countryVerified = 0
 
-    #lastNameVerification()
+    country = input(f"{countryPrompt}{newLine}{chevronIndicator} ")
 
-    #phoneNumberVerification()
+    while (countryVerified == 0):
 
-    #emailAddressVerification()
+        if (not country):
+            country = input(f"{tab}{countryErrorPrompt}{newLine}{chevronIndicator} ")
+        else:
+            countryVerified = 1
+            print(f"{tab}{feedbackCountry}{newLine}")
 
-    #streetNumberVerification()
-    
-    #streetNameVerification()
+def writeToFile():
+    file = open("addressbook.txt", "w")
 
-    streetPrefixVerification()
-    
+    file.write(f"{firstName}\n{lastName}\n{phoneNumber}\n{emailAddress}\n{streetNumber}\n{streetName}\n{streetPrefix}\n{suburb}\n{city}\n{state}\n{postcode}\n{country}")
+
+    file.close()
+
+def readFromFile():
+    file = open("addressbook.txt", "r")
+
+    details = file.readlines()
+
+    print(details)
+
+    file.close()
+
+print(menuBanner)
+
+menuSelect = input(f"{newLine}Please type a menu option{newLine}(1) Add user details to address book{newLine}(2) Check address book details\n{chevronIndicator} ")
+
+while (menuSelect != 1 or menuSelect != 2):
+    menuSelect = input(f"{newLine}Please type a menu option{newLine}(1) Add user details to address book{newLine}(2) Check address book details\n{chevronIndicator} ")
+
+match menuSelect:
+    case "1":
+        firstNameVerification()
+        
+        lastNameVerification()
+        
+        phoneNumberVerification()
+        
+        emailAddressVerification()
+        
+        streetNumberVerification()
+        
+        streetNameVerification()
+        
+        streetPrefixVerification()
+        
+        suburbVerification()
+        
+        cityVerification()
+        
+        stateVerification()
+        
+        postcodeVerification()
+        
+        countryVerification()
+        
+        writeToFile()
+
+    case "2":
+        readFromFile()
+
+    case _:
+        print("There seems to be a problem. Please restart the program")
