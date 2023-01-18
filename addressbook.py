@@ -1,17 +1,4 @@
 # This application is an address book
-# The checklist for this project are as follows: 
-# 
-# 1. The user will be prompted for their details, including a name, phone number, email address, and home address
-# - The name must be a non-empty string
-# - The phone number may only be digits, no less or longer than 10
-# - The email address must contain a username and domain name, separated by a singular '@' symbol. The domain suffix must contain at least one period (.)
-# - The home address contains a street number, street name, street prefix (st, dr, etc.), suburb or city, state, postcode, and country    
-# 
-# 2. The details, once verified, will be saved to a .txt file
-#
-# 3. The details will be able to be retrieved later, and filtered via various specifications (e.g. people who live in Brisbane)
-#
-# 4. These will be printed out in the manner specified
 
 # Menu banner art
 menuBanner = "+--------------------+\n|    ADDRESS BOOK    |\n+--------------------+"
